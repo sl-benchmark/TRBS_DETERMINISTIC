@@ -22,8 +22,26 @@ def source_estimate(graph, obs_time, path_lengths, mu):
             a = path_lengths[obs][node]
             T[node].append(obs_time[obs] - mu*path_lengths[obs][node])
         var_T[node] = np.var(T[node])
+        
 
     scores = sorted(var_T.items(), key=operator.itemgetter(1), reverse=False)
+    source_candidate = scores[0][0]
+
+    return source_candidate, scores
+
+
+def source_estimate_corr(graph, obs_time, path_lengths, mu):
+    T = {}
+    corr_T = {}
+    for node in list(graph.nodes()):
+        T.setdefault(node, [])
+        for obs in np.array(list(obs_time.keys())):
+            a = path_lengths[obs][node]
+            T[node].append([obs_time[obs], mu*path_lengths[obs][node]])
+        corr_T[node] = np.var(np.array(T[node]))
+        
+
+    scores = sorted(corr_T.items(), key=operator.itemgetter(1), reverse=False)
     source_candidate = scores[0][0]
 
     return source_candidate, scores
