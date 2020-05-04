@@ -29,7 +29,7 @@ infected = nx.single_source_dijkstra_path_length(graph, source)
 obs=[0,19]
 obs_time = dict((k,v) for k,v in infected.items() if k in obs)
 
-res=sl.trbs_empirical(graph, obs_time, dist)[1]
+res=sl.trbs_deterministic(graph, obs_time, dist)[1]
 rank=-1
 for i in range(20):
     if res[i][0]==source:
