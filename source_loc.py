@@ -1,7 +1,10 @@
 import numpy as np
 import networkx as nx
 
-import TRBS_DETERMINISTIC.source_estimation as se
+try:
+    from . import source_estimation as se
+except (SystemError, ImportError): #ImportError
+    import source_estimation as se
 
 '''
 Enables to call functions to find the source estimation of the algorithm
